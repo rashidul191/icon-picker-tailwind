@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Icon Picker</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome (Free) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-6">
+
+    <div class="w-full max-w-2xl bg-white p-6 rounded-lg shadow-lg">
+        <h2 class="text-2xl font-bold mb-4 text-center">🌐 Icon Picker 🌐</h2>
+
+        <!-- Selected Input -->
+        <div class="mb-4">
+            <label class="block text-gray-700 font-medium mb-1">Selected Icon:</label>
+            <input type="text" id="selectedIcon" class="w-full px-4 py-2 border rounded bg-gray-100 cursor-pointer"
+                placeholder="Click to pick an icon" readonly />
+        </div>
+
+        <!-- Preview Box -->
+        <div id="preview" class="text-3xl mb-4 text-blue-600"></div>
+
+        <!-- Icon Picker -->
+        <div id="iconPicker"
+            class="hidden grid grid-cols-6 gap-4 max-h-64 overflow-y-auto border rounded p-4 bg-gray-50">
+            <!-- Icons will be loaded here -->
+        </div>
+    </div>
+
+    <!-- Add jQuery CDN below -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <!-- ...existing code... -->
+
+    <!-- ...existing code... -->
+    <script>
+        // ...existing code...
+        const fontAwesomeIcons = [
+            "fa-brands fa-facebook",
+            "fa-brands fa-facebook-f",
+            "fa-brands fa-twitter",
+            "fa-brands fa-x-twitter",
+            "fa-brands fa-instagram",
+            "fa-brands fa-linkedin",
+            "fa-brands fa-linkedin-in",
+            "fa-brands fa-youtube",
+            "fa-brands fa-github",
+            "fa-brands fa-tiktok",
+            "fa-brands fa-pinterest",
+            "fa-brands fa-reddit",
+            "fa-brands fa-discord",
+            "fa-brands fa-snapchat",
+            "fa-brands fa-whatsapp",
+            "fa-brands fa-telegram",
+            "fa-brands fa-skype",
+            "fa-brands fa-behance",
+            "fa-brands fa-dribbble",
+            "fa-brands fa-medium",
+            "fa-brands fa-vimeo",
+            "fa-brands fa-slack",
+            "fa-brands fa-stack-overflow",
+            // More icons below
+            "fa-brands fa-apple",
+            "fa-brands fa-android",
+            "fa-brands fa-windows",
+            "fa-brands fa-amazon",
+            "fa-brands fa-google",
+            "fa-brands fa-google-play",
+            "fa-brands fa-paypal",
+            "fa-brands fa-spotify",
+            "fa-brands fa-dropbox",
+            "fa-brands fa-flickr",
+            "fa-brands fa-tumblr",
+            "fa-brands fa-vk",
+            "fa-brands fa-weibo",
+            "fa-brands fa-wordpress",
+            "fa-brands fa-yahoo",
+            "fa-brands fa-cc-visa",
+            "fa-brands fa-cc-mastercard",
+            "fa-brands fa-cc-amex",
+            "fa-brands fa-cc-paypal",
+            "fa-brands fa-cc-stripe",
+            "fa-brands fa-cc-discover",
+            "fa-brands fa-cc-jcb",
+            "fa-brands fa-cc-diners-club",
+            "fa-brands fa-cc-apple-pay",
+            "fa-brands fa-cc-amazon-pay",
+            "fa-brands fa-uber",
+            "fa-brands fa-airbnb",
+            "fa-brands fa-stack-exchange",
+            "fa-brands fa-steam",
+            "fa-brands fa-steam-symbol",
+            "fa-brands fa-gitlab",
+            "fa-brands fa-bitbucket",
+            "fa-brands fa-docker",
+            "fa-brands fa-digg",
+            "fa-brands fa-quora",
+            "fa-brands fa-soundcloud",
+            "fa-brands fa-mastodon",
+            "fa-brands fa-xbox",
+            "fa-brands fa-napster",
+            "fa-brands fa-etsy",
+            "fa-brands fa-imdb",
+            "fa-brands fa-patreon",
+            "fa-brands fa-stripe",
+            "fa-brands fa-telegram-plane",
+            // ...existing code...
+            "fa-solid fa-phone",
+            "fa-solid fa-phone-volume",
+            "fa-solid fa-envelope",
+            "fa-solid fa-envelope-open",
+            "fa-solid fa-cart-shopping",
+            "fa-solid fa-shopping-cart",
+            "fa-solid fa-map",
+            "fa-solid fa-map-marker",
+            "fa-solid fa-map-marker-alt",
+            "fa-solid fa-location-dot",
+            "fa-solid fa-location-arrow",
+            "fa-solid fa-globe",
+            "fa-solid fa-user",
+            "fa-solid fa-users",
+            "fa-solid fa-user-plus",
+            "fa-solid fa-user-minus",
+            "fa-solid fa-user-circle",
+            "fa-solid fa-home",
+            "fa-solid fa-house",
+            "fa-solid fa-building",
+            "fa-solid fa-calendar",
+            "fa-solid fa-clock",
+            "fa-solid fa-bell",
+            "fa-solid fa-star",
+            "fa-solid fa-heart",
+            "fa-solid fa-search",
+            "fa-solid fa-edit",
+            "fa-solid fa-trash",
+            "fa-solid fa-download",
+            "fa-solid fa-upload",
+            "fa-solid fa-camera",
+            "fa-solid fa-image",
+            "fa-solid fa-link",
+            "fa-solid fa-paperclip"
+            // ...existing code...
+        ];
+        // ...existing code...
+
+        $(function () {
+            // Show/hide picker on input click
+            $('#selectedIcon').on('click', function () {
+                $('#iconPicker').toggleClass('hidden');
+            });
+
+            // Load icons
+            fontAwesomeIcons.forEach(function (iconClass) {
+                const $icon = $('<i>')
+                    .addClass(iconClass + ' text-xl text-gray-700 hover:text-blue-600 cursor-pointer transition')
+                    .attr('title', iconClass)
+                    .on('click', function () {
+                        $('#selectedIcon').val(iconClass);
+                        $('#preview').html(`<i class="${iconClass}"></i>`);
+                        $('#iconPicker').addClass('hidden');
+                    });
+                $('#iconPicker').append($icon);
+            });
+
+            // Hide picker if clicked outside
+            $(document).on('click', function (e) {
+                if (!$(e.target).closest('#iconPicker, #selectedIcon').length) {
+                    $('#iconPicker').addClass('hidden');
+                }
+            });
+        });
+    </script>
+    <!-- ...existing code... -->
+
+</body>
+
+</html>
